@@ -15,7 +15,7 @@ datasource db {
 }
 
 model Cliente {
-  id             String  @id
+  id             String  @id @default(uuid())
   nome           String
   telefone       String?
   whatsapp       String
