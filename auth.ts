@@ -28,8 +28,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
        }
       },
       
+      
     }),
   ],
   
-  
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      // Sempre redireciona para /admin após login
+      return "/admin"
+    }
+  },
 })

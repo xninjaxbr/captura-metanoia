@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,10 +9,15 @@ import { toDate } from "../util/toDate";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { toast } from "sonner"
+import { Loader2Icon } from "lucide-react";
 
 
 export default function Dados(){
-     const [nome, setNome] = useState("");
+
+  
+
+  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [telefone, setTelefone] = useState("");
@@ -20,6 +25,17 @@ export default function Dados(){
   const [indicacao, setIndicacao] = useState("E");
   const [sexo, setSexo] = useState("M");
   const [politica, setPolitica] = useState(false);
+  const [campo, setCampo] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  
+  useEffect(()=> {
+    if(!nome || !email || whatsapp.length < 15){
+      setCampo(true)
+    }else{
+      setCampo(false)
+    }
+  }, [email, nome, whatsapp])
 
   const handleSexoRadioChange = (event: string) => {
     setSexo(event);
@@ -28,6 +44,59 @@ export default function Dados(){
 const handleIndicacaoRadioChange = (event: string) => {
     setIndicacao(event);
 };
+
+function apagaTudo(){
+  setNome("")
+  setEmail("")
+  setWhatsapp("")
+  setTelefone("")
+  setDataNascimento("")
+  setIndicacao("E")
+  setSexo("M")
+  setPolitica(false)
+  setCampo(false)
+  setPolitica(false)
+}
+
+async function inscreverSe(){
+  setLoading(true)
+    
+  const res = await fetch(
+      `api/ws/cadastro`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          nome,
+          email,
+          whatsapp,
+          dataNascimento,
+          indicacao, 
+          sexo, 
+          telefone
+         }),    
+      },
+  )
+  
+  const data = await res.json()
+
+  if(data.success){
+    toast.success(data.message , {
+      richColors: true,
+      classNames: {
+        success: '!bg-blue-600 !border-blue-800 !text-blue-100'
+      }
+    })
+    apagaTudo()
+  }else{
+    toast.error(`Erro: ${data.message} - Tente novamento mais tarde.`, {
+      richColors: true, 
+      classNames: {
+        error: '!bg-red-600 !border-red-800 !text-red-100'
+      }
+    })
+  }
+  setLoading(false)
+}
 
 
     return (
@@ -52,7 +121,7 @@ const handleIndicacaoRadioChange = (event: string) => {
           nossa equipe.
         </div>
         <div className="grid gap-1">
-          <Label htmlFor="nome">Nome completo</Label>
+          <Label htmlFor="nome">Nome completo*</Label>
           <Input
             id="nome"
             name="nome"
@@ -65,7 +134,7 @@ const handleIndicacaoRadioChange = (event: string) => {
           />
         </div>
         <div className="grid gap-1">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">Email*</Label>
           <Input
             id="email"
             name="email"
@@ -79,7 +148,7 @@ const handleIndicacaoRadioChange = (event: string) => {
           />
         </div>
         <div className="grid gap-1">
-          <Label htmlFor="whatsapp">Whatsapp</Label>
+          <Label htmlFor="whatsapp">Whatsapp*</Label>
           <Input
             id="whatsapp"
             name="whatsapp"
@@ -151,13 +220,30 @@ const handleIndicacaoRadioChange = (event: string) => {
           </div>
         </div>
           <div className="flex items-center gap-2 pt-6">
-            <Checkbox checked={politica} onCheckedChange={()=> {setPolitica(!politica)}} className="border-black"/> Li e concordo com a Política de Privacidade e os Termos de Uso deste site.
+            <Checkbox checked={politica} onCheckedChange={()=> {setPolitica(!politica)}} className="border-black" id="termo" /> <Label htmlFor="termo">Li e concordo com a Política de Privacidade e os Termos de Uso deste site.</Label>
+          </div>
+          <div>
+            <p data-hide={politica === false || campo === false} className="font-bold pt-6 text-red-500 data-[hide=true]:hidden">* Os campos obrigatórios não foram preenchidos</p>
           </div>
       </div>
       <div className="mt-5 w-full flex justify-end mr-8">
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button data-disabled={politica === false} className="bg-[#0b2782] hover:bg-[#07174d] data-[disabled=true]:opacity-30 data-[disabled=true]:cursor-not-allowed cursor-pointer"  type="submit">Realizar Inscrição</Button>
+            <Button 
+            onClick={() => {
+              if(politica === false || campo === true){
+                return
+              }else{
+                inscreverSe()
+              }
+
+            }}
+            data-disabled={politica === false || campo === true || loading === true} 
+            className="bg-[#0b2782] hover:bg-[#07174d] data-[disabled=true]:opacity-30 data-[disabled=true]:cursor-not-allowed cursor-pointer"  
+            type="submit">
+              <Loader2Icon data-loading={loading} className="animate-spin data-[loading=false]:hidden" />
+              Realizar Inscrição
+            </Button>
           </TooltipTrigger>
           <TooltipContent hidden={politica === true}>
             <p>Você deve concordar com a Política de Privacidade e os Termos de Uso </p>
