@@ -10,7 +10,7 @@ import Top from "./components/top";
 export default function Home() {
   return (
     <main >
-      <div className="mx-auto px-12 pb-20 ">
+      <div className="mx-auto sm:px-12 sm:pb-20 ">
         <Top />
         <NavBar />
         <Dados />
@@ -18,7 +18,7 @@ export default function Home() {
         <Contato />
         <Inscreva />
       </div>
-      <Rodape />
+        <Rodape />
     </main>
   );
 }

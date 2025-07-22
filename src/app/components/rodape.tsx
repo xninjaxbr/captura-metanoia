@@ -5,18 +5,18 @@ export default function Rodape(){
     
     
     return (
-        <div className="flex justify-center w-full h-52" >
-            <div className='w-full rounded-md bg-[#010E38]  h-full left-0 mask-t-from-90% p-4 flex justify-between gap-8'>                
-                <div className="w-1/3 max-w-sm">
+        <div className="flex  justify-center w-full  " >
+            <div className='w-full flex-col sm:flex-row rounded-md bg-[#010E38]  h-full left-0 mask-t-from-90% sm:p-4 pt-10 flex justify-between items-center gap-8'>                
+                <div className="sm:w-1/3 max-w-sm justify-center px-4 ">
                     <p className='inline text-white text-sm font-bold'>Projeto Metanoia</p>
                     <p className="text-[#5895FF] text-xs  py-2">Transformando mentalidades e construindo futuros melhores para jovens de periferia.</p>
-                    <div className="pt-4 flex gap-3">
+                    <div className="pt-4 flex gap-3 justify-center">
                         <Link href="https://instagram.com/" target="_blank" className="bg-[#5895FF] p-1.5 rounded-full text-white"><Instagram /></Link>
                         <Link href="https://www.facebook.com/?locale=pt_BR" target="_blank"  className="bg-[#5895FF] p-1.5 rounded-full text-white"><Facebook /></Link>
                         <Link href="https://www.youtube.com/" target="_blank"  className="bg-[#5895FF] p-1.5 rounded-full text-white"><Youtube /></Link>
                     </div>
                 </div>
-                <div className="w-1/3 max-w-sm">
+                <div className="sm:w-1/3 w-full sm:max-w-sm justify-center px-4">
                     <p className='inline text-white text-sm font-bold'>Links Rápidos</p>
                     <div className="pt-2 flex flex-col text-sm">
                         <Link href="#" target="_self" className="text-[#5895FF]   ">Início</Link>
@@ -25,7 +25,7 @@ export default function Rodape(){
                         <Link href="#" target="_self" className="text-[#5895FF]   ">Inscreva-se</Link>
                     </div>
                 </div>
-                <div className="w-1/3 max-w-sm">
+                <div className="sm:w-1/3 w-full sm:max-w-sm px-4 mb-8">
                     <p className='inline text-white text-sm font-bold'>Contato</p>
                     <div className="pt-2 flex flex-col gap-1.5 text-[#5895FF] text-sm">
                         <Link target="_blank" href="mailto:contato@exemplo.com?subject=Dúvida sobre Metanoia&body=Entrei em contato através da página do Metanoia e gostaria de mais informações..." className="flex gap-2 items-center"><span className="bg-[#3A74FF] rounded-full p-1.5"><Mail className="text-white w-4 h-4"/></span>contato@exemplo.com</Link>

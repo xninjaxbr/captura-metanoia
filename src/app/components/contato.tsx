@@ -11,7 +11,7 @@ export default function Contato(){
             </div>
             <div className="bg-white flex flex-col justify-center items-center shadow">
                 <div className="text-center text-3xl font-bold text-black">Fale Conosco</div>
-                <div className="text-center text-sm">Tem dúvidas, sugestões ou quer participar do Projeto Metanoia? Fale conosco.</div>
+                <div className="text-center text-sm">Tem dúvidas, sugestões ou quer participar <span className="block sm:inline"> do Projeto Metanoia? Fale conosco.</span></div>
                 <div className="py-8 flex flex-col gap-4">
                     <Link target="_blank" href="mailto:contato@exemplo.com?subject=Dúvida sobre Metanoia&body=Entrei em contato através da página do Metanoia e gostaria de mais informações..." className="flex gap-2 items-center"><span className="bg-[#3A74FF] rounded-full p-1.5"><Mail className="text-white"/></span>contato@exemplo.com</Link>
                     <Link target="_blank" href="https://wa.me/5561999999999?text=Olá...%20Estou%20entrando%20em%20contato%20através%20do%20Site%20Metanoia..." className="flex gap-2 items-center"><span className="bg-[#3A74FF] rounded-full p-1.5"><Phone className="text-white"/></span>(61) 99999-9999</Link>

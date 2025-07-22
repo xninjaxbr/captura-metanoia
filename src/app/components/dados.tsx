@@ -105,7 +105,7 @@ async function inscreverSe(){
             {/* <Image src={foto} className='w-1/2 mask-x-from-80% mask-x-to-90% rounded-lg' alt='Stanley' width={200} height={200} /> */}
             <iframe 
               width="100%" 
-              height="315" 
+              height="100%" 
               src="https://www.youtube.com/embed/kUzp1MxtvCQ?rel=0&modestbranding=1&controls=1&disablekb=1&fs=0" 
               title="YouTube video player"  
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -245,13 +245,11 @@ async function inscreverSe(){
               Realizar Inscrição
             </Button>
           </TooltipTrigger>
-          <TooltipContent hidden={politica === true}>
+          <TooltipContent hidden={politica === true} className="" >
             <p>Você deve concordar com a Política de Privacidade e os Termos de Uso </p>
           </TooltipContent>
         </Tooltip>
       </div> 
-
-           
         </div>
     )
 }
