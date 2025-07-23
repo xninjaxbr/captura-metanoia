@@ -7,8 +7,7 @@ export async function GET(request: NextRequest){
 
     const session = await auth()
 
-
-    if (session) {
+    if (!session) {
         return NextResponse.json(
          { success: false, message: 'Usuário não autorizado' },
          { status: 401 },
@@ -21,13 +20,13 @@ export async function GET(request: NextRequest){
     
 
     const page = parseInt(searchParams.get('page') || '1') // Página atual, default 1
-    const limit = parseInt(searchParams.get('limit') || '20') // Limite de resultados por página, default 10
+    const limit = parseInt(searchParams.get('limit') || '50') // Limite de resultados por página, default 10
 
     const skip = (page - 1) * limit // Calcular quantos registros pular
 
     const totalRecords = await prisma.cliente.count()
 
-    const getAll = await prisma.cliente.findMany({skip, take: limit})
+    const getAll = await prisma.cliente.findMany({orderBy: {createAt: "asc"},skip, take: limit})
 
     const totalPages = Math.ceil(totalRecords / limit)
 
