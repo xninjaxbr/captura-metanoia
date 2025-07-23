@@ -5,6 +5,7 @@ import LogoutButton from "./sair"
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import moment from 'moment';
 import { Pagina } from "./pagination";
+import { Files } from "lucide-react";
 
 interface Idata{
 createAt: string
@@ -27,33 +28,46 @@ export interface Ipagination{
 }
  
 export default function Lista() {
-//   const session = await auth()
-//   if (!session) return redirect('api/auth/signin')
   
-    const [data, setData] = useState<Idata[]>()
-    const [pagination, setPagination] = useState<Ipagination>()
-    const [page, setPage] = useState(1)
+  const [data, setData] = useState<Idata[]>()
+  const [pagination, setPagination] = useState<Ipagination>()
+  const [page, setPage] = useState(1)
     
 
-    useEffect(()=> {
-        async function fetchData(){
+  useEffect(()=> {
+      async function fetchData(){
 
-            const res = await fetch(
-                `api/ws/findAll?page=${page}`,
-                {
-                    method: 'GET',
-                },
-            )
-            
-            const data = await res.json()
-            setData(data.data)
-            setPagination(data.pagination)
-            
-        }
-        fetchData()
-  
-    }, [page])
+          const res = await fetch(
+              `api/ws/findAll?page=${page}`,
+              {
+                  method: 'GET',
+              },
+          )
+          
+          const data = await res.json()
+          setData(data.data)
+          setPagination(data.pagination)
+          
+      }
+      fetchData()
+
+  }, [page])
  
+  async function copiarItens(tipo: 'n' | 'w' | 'e'){
+    const res = await fetch(
+      `api/ws/todoItem`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+           tipo: tipo
+          })
+        },
+    )
+          
+    const data = await res.json()
+    navigator.clipboard.writeText(data.data)
+  }
+
   return (
     <div className="px-10 pt-32">
       <LogoutButton />
@@ -63,10 +77,10 @@ export default function Lista() {
         <TableCaption>Lista de inscritos no Metanoia</TableCaption>
         <TableHeader>
         <TableRow className="border-2 border-gray-800">
-          <TableHead className="border-r border-gray-400" >Nome</TableHead>
+          <TableHead className="border-r border-gray-400" ><div className="flex w-full justify-between">Nome <Files onClick={() => copiarItens('n')} /></div></TableHead>
           <TableHead className="border-r border-gray-400">Telefone</TableHead>
-          <TableHead className="border-r border-gray-400">Whatsapp</TableHead >
-          <TableHead className="border-r border-gray-400">Email</TableHead>
+          <TableHead className="border-r border-gray-400"><div className="flex w-full justify-between">Whatsapp <Files onClick={() => copiarItens('w')} /> </div> </TableHead >
+          <TableHead className="border-r border-gray-400"><div className="flex w-full justify-between">Email <Files className="inline right-0" onClick={() => copiarItens('e')} /> </div></TableHead>
           <TableHead className="border-r border-gray-400">Data de Nascimento</TableHead >
           <TableHead className="border-r border-gray-400">Sexo</TableHead >
           <TableHead className="border-r border-gray-400">Indicação</TableHead >
