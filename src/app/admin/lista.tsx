@@ -6,6 +6,7 @@ import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, Tabl
 import moment from 'moment';
 import { Pagina } from "./pagination";
 import { Files } from "lucide-react";
+import { toast } from "sonner";
 
 interface Idata{
 createAt: string
@@ -66,6 +67,7 @@ export default function Lista() {
           
     const data = await res.json()
     navigator.clipboard.writeText(data.data)
+    toast(`Todos os ${tipo === 'n' ? 'Nomes': tipo === 'e' ? 'E-mails' : 'Whatsapps'} foram copiados`)
   }
 
   return (
@@ -77,10 +79,10 @@ export default function Lista() {
         <TableCaption>Lista de inscritos no Metanoia</TableCaption>
         <TableHeader>
         <TableRow className="border-2 border-gray-800">
-          <TableHead className="border-r border-gray-400" ><div className="flex w-full justify-between">Nome <Files onClick={() => copiarItens('n')} /></div></TableHead>
+          <TableHead className="border-r border-gray-400" ><div className="flex w-full justify-between ">Nome <Files className="active:text-gray-500" onClick={() => copiarItens('n')} /></div></TableHead>
           <TableHead className="border-r border-gray-400">Telefone</TableHead>
-          <TableHead className="border-r border-gray-400"><div className="flex w-full justify-between">Whatsapp <Files onClick={() => copiarItens('w')} /> </div> </TableHead >
-          <TableHead className="border-r border-gray-400"><div className="flex w-full justify-between">Email <Files className="inline right-0" onClick={() => copiarItens('e')} /> </div></TableHead>
+          <TableHead className="border-r border-gray-400"><div className="flex w-full justify-between">Whatsapp <Files className="active:text-gray-500" onClick={() => copiarItens('w')} /> </div> </TableHead >
+          <TableHead className="border-r border-gray-400"><div className="flex w-full justify-between">Email <Files className="inline right-0 active:text-gray-500" onClick={() => copiarItens('e')} /> </div></TableHead>
           <TableHead className="border-r border-gray-400">Data de Nascimento</TableHead >
           <TableHead className="border-r border-gray-400">Sexo</TableHead >
           <TableHead className="border-r border-gray-400">Indicação</TableHead >
