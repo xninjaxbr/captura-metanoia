@@ -98,7 +98,7 @@ export default function Lista() {
             <TableCell className="border-r border-gray-400">{item.email}</TableCell>
             <TableCell className="border-r border-gray-400">{moment(item.dataNascimento).format('DD/MM/YYYY')}</TableCell>
             <TableCell className="border-r border-gray-400">{item.sexo}</TableCell>
-            <TableCell className="border-r border-gray-400">{item.indicacao}</TableCell>
+            <TableCell className="border-r border-gray-400">{item.indicacao === "I" ? 'Igreja' : item.indicacao === 'E' ? 'Escola': 'Coorporação'}</TableCell>
             <TableCell >{moment(item.createAt).format('DD/MM/YYYY')}</TableCell>
           </TableRow>
         ))}
